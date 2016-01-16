@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+
+        <p:growl id="mensaje" autoUpdate="true" />
+
+
+        <h:form id="form">
+            
+            <p:commandButton value="Ingrese Cliente" oncomplete="PF('wdlgDatos').show();"  actionListener="#{clienteBean.setAccion('Registrar')}" update=":dlgDatos"/>
+            
+            <p:commandButton value="Listar" actionListener="#{clienteBean.listar()}"  update="data" />
+
+                             
+ <p:dataTable  id="data" value="#{clienteBean.listClientes}" 
+               paginator="true"
+               rows="4"
+               paginatorPosition="bottom"
+               var="Cliente">
+       
+     <p:column headerText="Nombre" filterBy="#{Cliente.nombreCliente}" >
+       <p:outputLabel  value="#{Cliente.nombreCliente}" />
+  </p:column>
+    
+     <p:column headerText="Apellidos" filterBy="#{Cliente.apellidoCliente}" >
+        <p:outputLabel  value="#{Cliente.apellidoCliente}" />
+  </p:column>
+    
+     <p:column headerText="Telefono" filterBy="#{Cliente.tefefono}" >
+        <p:outputLabel  value="#{Cliente.tefefono}" />
+  </p:column>
+
+     <p:column headerText="Email"  filterBy="#{Cliente.email}">
+        <p:outputLabel  value="#{Cliente.email}" />
+  </p:column>
+  
+ <p:column headerText="Modificar" >
+     <p:commandButton value="Modificar" actionListener="#{clienteBean.leerId(Cliente)}" oncomplete="PF('wdlgDatos').show();" update=":dlgDatos"/>
+  </p:column>
+     
+     
+     <p:column headerText="Eliminar" >
+         <p:commandButton value="Eliminar" actionListener="#{clienteBean.eliminar(Cliente)}" update="data"/>
+  </p:column>
+ 
+ </p:dataTable>       
+   </h:form>
+        
+        <p:dialog header="Datos" widgetVar="wdlgDatos" id="dlgDatos"  >
+        <h:form>
+            <p:outputLabel value="Nombre" />
+            <p:inputText  value="#{clienteBean.cliente.nombreCliente}"/>
+
+            <p:outputLabel value="Apellidos" />
+            <p:inputText  value="#{clienteBean.cliente.apellidoCliente}" />
+
+            <p:outputLabel value="Telefono" />
+            <p:inputText value="#{clienteBean.cliente.tefefono}" />
+
+            <p:outputLabel value="Email" />
+            <p:inputText value="#{clienteBean.cliente.email}" />
+           
+            <p:commandButton value="#{clienteBean.accion}" actionListener="#{clienteBean.operar()}" oncomplete="PF('wdlgDatos').hide();"  update=":form:data" />
+            <p:commandButton value="Canselar" immediate="true" oncomplete="PF('wdlgDatos').hide();" />
+       </h:form>     
+       </p:dialog>
+    
+    </h:body>
+</html>
+
