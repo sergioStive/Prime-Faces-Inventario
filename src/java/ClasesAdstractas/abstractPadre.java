@@ -18,7 +18,7 @@ public abstract class abstractPadre extends Conexion{
 
     public abstract List listarClientes() throws Exception;
 
-    public abstract String leerPorId() throws Exception;
+    
 
     public abstract void modificar() throws Exception;
     

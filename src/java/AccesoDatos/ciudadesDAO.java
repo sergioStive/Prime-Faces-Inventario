@@ -7,7 +7,6 @@ package AccesoDatos;
 
 import ClasesAdstractas.abstractPadre;
 import MapeoClasesModelo.ciudadesDTO;
-import MapeoClasesModelo.usuariosDTO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,19 +64,58 @@ public class ciudadesDAO extends abstractPadre {
         return lista;
     }
 
-    @Override
-    public String leerPorId() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ciudadesDTO leerPorId(ciudadesDTO ciud) throws Exception {
+       
+        try {
+            this.Conectar();
+            PreparedStatement st = this.getCn().prepareStatement("SELECT IdCiudad,NombreCiudad FROM ciudades WHERE IdCiudad = ? ");
+
+            st.setInt(1, ciud.getIdCiudad());
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                
+                ciud.setIdCiudad(rs.getInt("IdUsuario"));
+                ciud.setNombreCiudad(rs.getString("Nombres"));
+                
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.Cerrar();
+        }
+        return ciud;
     }
 
     @Override
     public void modificar() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            this.Conectar();
+            PreparedStatement st = this.getCn().prepareStatement("UPDATE IdCiudad,NombreCiudad  WHERE IdCiudad = ?");
+            st.setInt(1, ciud.getIdCiudad());
+            st.setString(2, ciud.getNombreCiudad());
+            
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.Cerrar();
+        }
     }
 
     @Override
     public void eliminarCliente() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            this.Conectar();
+            PreparedStatement st = this.getCn().prepareStatement("DELETE FROM ciudades WHERE IdCiudad = ?");
+            st.setInt(1, ciud.getIdCiudad());
+            st.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.Cerrar();
+        }
     }
+
+    
     
 }

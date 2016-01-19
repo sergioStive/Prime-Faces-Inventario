@@ -79,7 +79,7 @@ public class usuariosDAO extends abstractPadre {
 
     public usuariosDTO leerPorId(usuariosDTO per) throws Exception {
 
-        ResultSet rs;
+        
         try {
             this.Conectar();
             PreparedStatement st = this.getCn().prepareStatement("SELECT IdUsuario,Nombres,Apellidos,"
@@ -138,9 +138,6 @@ public class usuariosDAO extends abstractPadre {
         }
     }
 
-    @Override
-    public String leerPorId() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
 }
