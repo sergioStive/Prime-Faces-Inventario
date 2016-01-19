@@ -18,7 +18,8 @@ import java.util.List;
 
 public class PersonaDAO extends Conexion {
 
-    public void registrar(Clientes per) throws Exception {
+    
+    public void registrar(Clientes per) throws Exception  {
         try {
             this.Conectar();
             PreparedStatement st = this.getCn().prepareStatement("INSERT INTO clientes (NombreCliente,ApellidoCliente,tefefono,email) values (?,?,?,?)");
