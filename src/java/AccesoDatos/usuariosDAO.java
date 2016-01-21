@@ -89,7 +89,7 @@ public class usuariosDAO extends abstractPadre {
             rs = st.executeQuery();
 
             while (rs.next()) {
-                per = new usuariosDTO();
+                
                 per.setIdUsuario(rs.getInt("IdUsuario"));
                 per.setNombres(rs.getString("Nombres"));
                 per.setApellidos(rs.getString("Apellidos"));
@@ -125,7 +125,7 @@ public class usuariosDAO extends abstractPadre {
     }
 
     @Override
-    public void eliminarCliente() throws Exception {
+    public void eliminar() throws Exception {
         try {
             this.Conectar();
             PreparedStatement st = this.getCn().prepareStatement("DELETE FROM usuarios WHERE IdUsuario = ?");

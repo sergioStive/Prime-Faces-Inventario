@@ -103,7 +103,7 @@ public class ciudadesDAO extends abstractPadre {
     }
 
     @Override
-    public void eliminarCliente() throws Exception {
+    public void eliminar() throws Exception {
         try {
             this.Conectar();
             PreparedStatement st = this.getCn().prepareStatement("DELETE FROM ciudades WHERE IdCiudad = ?");

@@ -22,5 +22,5 @@ public abstract class abstractPadre extends Conexion{
 
     public abstract void modificar() throws Exception;
     
-    public abstract void eliminarCliente() throws Exception;
+    public abstract void eliminar() throws Exception;
 }

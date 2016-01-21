@@ -19,25 +19,27 @@ import java.util.List;
  * @author APRENDIZ_SENA
  */
 public class clasesDAO extends abstractPadre {
-  clasesDTO clase = new clasesDTO();
-  ResultSet rs;  
-  @Override
+
+    clasesDTO clase = new clasesDTO();
+    ResultSet rs;
+
+    @Override
     public void registrar() throws Exception {
-      String mensajeSalida = "";
+        String mensajeSalida = "";
         try {
             this.Conectar();
             PreparedStatement st = this.getCn().prepareStatement("INSERT INTO clases (IdClase,NombreClase) values (?,?)");
 
             st.setInt(1, clase.getIdClase());
             st.setString(2, clase.getNombreClase());
-            
+
             st.executeUpdate();
         } catch (SQLException sqle) {
             mensajeSalida = "Ocurrió la siguiente exception : " + sqle.getMessage();
             throw sqle;
         } finally {
             this.Cerrar();
-        }  
+        }
     }
 
     @Override
@@ -45,13 +47,13 @@ public class clasesDAO extends abstractPadre {
         List<clasesDTO> lista;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT IdClase, NombreClase FROM usuarios");
+            PreparedStatement st = this.getCn().prepareCall("SELECT IdClase, NombreClase FROM clases");
             rs = st.executeQuery();
             lista = new ArrayList();
             while (rs.next()) {
-                clase.setIdClase(rs.getInt("IdUsuario"));
-                clase.setNombreClase(rs.getString("Nombres"));
-                
+                clase.setIdClase(rs.getInt("IdClase"));
+                clase.setNombreClase(rs.getString("IdClase"));
+
                 st.executeUpdate();
 
                 lista.add(clase);
@@ -68,11 +70,11 @@ public class clasesDAO extends abstractPadre {
     public void modificar() throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareStatement("UPDATE usuarios SET IdUsuario =?, Nombres\n"
-                    + "Apellidos = ?,Clave = ?,IdSucursal = ?,IdRol = ? WHERE IdUsuario = ?");
+            PreparedStatement st = this.getCn().prepareStatement("UPDATE clases SET IdClase =?,NombreClase = ?"
+                    + " WHERE IdClase = ?");
             st.setInt(1, clase.getIdClase());
             st.setString(2, clase.getNombreClase());
-            
+
             st.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -81,9 +83,41 @@ public class clasesDAO extends abstractPadre {
         }
     }
 
-    @Override
-    public void eliminarCliente() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public clasesDTO leerPorId(clasesDTO clase) throws Exception {
+
+        try {
+            this.Conectar();
+            PreparedStatement st = this.getCn().prepareStatement("SELECT  IdClase,NombreClase FROM clases WHERE IdClase = ? ");
+
+            st.setInt(1, clase.getIdClase());
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                
+                clase.setIdClase(rs.getInt("IdClase"));
+                clase.setNombreClase(rs.getString("NombreClase"));
+                
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.Cerrar();
+        }
+        return clase;
     }
-    
+
+@Override
+        public void eliminar() throws Exception {
+     try {
+            this.Conectar();
+            PreparedStatement st = this.getCn().prepareStatement("DELETE FROM clases WHERE IdClase = ?");
+            st.setInt(1, clase.getIdClase());
+            st.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.Cerrar();
+        }       
+    }
 }
+
